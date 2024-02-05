@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "./ui/Navbar";
-import Model from "./ui/components/Model";
+import Model from "./ui/Model";
+import Link from "next/link";
 
 type Props = {};
 
@@ -15,14 +16,16 @@ const Home = (props: Props) => {
             An AI-Powered Shopping Store.
           </span>
         </h1>
-        <button
-          type="button"
-          className="flex flex-col items-center justify-center px-5 py-4 rounded-full bg-blue-600 mt-5"
-        >
-          <span className="font-semibold text-white text-6xl my-4 mx-2">
-            Get Started
-          </span>
-        </button>
+        <Link href={"/chatwidget"}>
+          <button
+            type="button"
+            className="flex flex-col items-center justify-center px-5 py-4 rounded-full bg-blue-600 shadow-sm shadow-blue-600 border-4 border-solid border-black mt-5 capitalize"
+          >
+            <span className="font-semibold text-white text-6xl my-4 mx-2">
+              Get Started
+            </span>
+          </button>
+        </Link>
         <Model />
       </section>
     </>

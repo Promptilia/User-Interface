@@ -1,9 +1,8 @@
-// pages/index.js
 "use client";
-// pages/index.js
+
 import { useState, useEffect } from "react";
 import Head from "next/head";
-import Navbar from "../ui/components/Navbar";
+import Navbar from "../ui/Navbar";
 
 interface ChatMessage {
   role: "user" | "chatbot";
@@ -81,81 +80,82 @@ const Home = () => {
   };
 
   return (
-    <div className="container mx-auto p-4 bg-white">
-      <Head>
-        <title>Lemonade</title>
-        <meta name="description" content="Personal Choice Assistant" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <>
+      <div className="container mx-auto p-4 bg-white">
+        <Navbar />
+        <Head>
+          <title>Lemonade</title>
+          <meta name="description" content="Personal Choice Assistant" />
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
 
-      <main className="flex flex-col items-center justify-center min-h-screen">
-        {/* Heading and Subheading */}
-        <h1 className="text-4xl font-cursive mb-2 text-gray-800">Lemonade</h1>
-        <h4 className="text-lg text-gray-600 mb-4">
-          Personal Choice Assistant
-        </h4>
+        <main className="flex flex-col items-center justify-center min-h-screen">
+          {/* Heading and Subheading */}
+          <h1 className="text-4xl font-cursive mb-2 text-gray-800">Lemonade</h1>
+          <h4 className="text-lg text-gray-600 mb-4">
+            Personal Choice Assistant
+          </h4>
 
-        <div className="max-w-md border p-4 rounded-md mb-4">
-          {/* Display Chat History */}
-          {chatHistory.map((message, index) => (
-            <div
-              key={index}
-              className={`p-3 mb-2 ${
-                message.role === "user" ? "text-right" : "text-left"
+          <div className="max-w-md border p-4 rounded-md mb-4">
+            {/* Display Chat History */}
+            {chatHistory.map((message, index) => (
+              <div
+                key={index}
+                className={`p-3 mb-2 ${
+                  message.role === "user" ? "text-right" : "text-left"
+                }`}
+              >
+                {/* Chatbot's Chat */}
+                {message.role === "chatbot" && (
+                  <div className="bg-gray-800 p-2 rounded-md inline-block">
+                    {message.content.split("").map((letter, letterIndex) => (
+                      <span
+                        key={letterIndex}
+                        className={`typing-animation-${letterIndex}`}
+                      >
+                        {letter}
+                      </span>
+                    ))}
+                  </div>
+                )}
+
+                {/* User's Chat */}
+                {message.role === "user" && (
+                  <div className="bg-gray-800 p-2 rounded-md inline-block">
+                    {message.content}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+
+          {/* User Input Field */}
+          <div className="flex items-center space-x-2">
+            <input
+              type="text"
+              value={userInput}
+              onChange={(e) => setUserInput(e.target.value)}
+              placeholder="Type your message..."
+              className="flex-grow px-2 py-1 border rounded-md focus:outline-none focus:border-blue-500 text-black"
+            />
+            <button
+              onClick={() => {
+                handleUserInput();
+                handleGetStarted();
+              }}
+              disabled={!userInput || isLoading}
+              className={`bg-pink-500 text-white px-4 py-2 rounded-md ${
+                isLoading
+                  ? "opacity-50 cursor-not-allowed"
+                  : "hover:bg-pink-600 transition duration-300"
               }`}
             >
-              {/* Chatbot's Chat */}
-              {message.role === "chatbot" && (
-                <div className="bg-gray-800 p-2 rounded-md inline-block">
-                  {message.content.split("").map((letter, letterIndex) => (
-                    <span
-                      key={letterIndex}
-                      className={`typing-animation-${letterIndex}`}
-                    >
-                      {letter}
-                    </span>
-                  ))}
-                </div>
-              )}
-
-              {/* User's Chat */}
-              {message.role === "user" && (
-                <div className="bg-gray-800 p-2 rounded-md inline-block">
-                  {message.content}
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-
-        {/* User Input Field */}
-        <div className="flex items-center space-x-2">
-          <input
-            type="text"
-            value={userInput}
-            onChange={(e) => setUserInput(e.target.value)}
-            placeholder="Type your message..."
-            className="flex-grow px-2 py-1 border rounded-md focus:outline-none focus:border-blue-500 text-black"
-          />
-          <button
-            onClick={() => {
-              handleUserInput();
-              handleGetStarted();
-            }}
-            disabled={!userInput || isLoading}
-            className={`bg-pink-500 text-white px-4 py-2 rounded-md ${
-              isLoading
-                ? "opacity-50 cursor-not-allowed"
-                : "hover:bg-pink-600 transition duration-300"
-            }`}
-          >
-            {isLoading ? "Loading..." : "Send"}
-          </button>
-        </div>
-      </main>
-
-      <Navbar />
-    </div>
+              {isLoading ? "Loading..." : "Send"}
+            </button>
+          </div>
+        </main>
+      </div>
+    </>
   );
 };
 

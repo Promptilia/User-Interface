@@ -1,4 +1,4 @@
-import { model } from "@/app/config/gemini";
+import { model } from "@/app/lib/config/gemini";
 import { removeBackTicks } from "./removeBackticks";
 
 export const generateAiResponse = async (prompt: string) => {

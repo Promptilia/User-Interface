@@ -1,4 +1,4 @@
-import { generateAiResponse } from "@/app/utils/generateAiResponse";
+import { generateAiResponse } from "@/app/lib/utils/generateAiResponse";
 import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (req: NextRequest) => {
