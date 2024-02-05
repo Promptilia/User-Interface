@@ -1,17 +1,17 @@
 // pages/index.js
-"use client"
+"use client";
 // pages/index.js
-import { useState, useEffect } from 'react';
-import Head from 'next/head';
-import Navbar from '../components/Navbar';
+import { useState, useEffect } from "react";
+import Head from "next/head";
+import Navbar from "../ui/components/Navbar";
 
 interface ChatMessage {
-  role: 'user' | 'chatbot';
+  role: "user" | "chatbot";
   content: string;
 }
 
 const Home = () => {
-  const [userInput, setUserInput] = useState<string>('');
+  const [userInput, setUserInput] = useState<string>("");
   const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [started, setStarted] = useState(false);
@@ -23,14 +23,17 @@ const Home = () => {
 
   const handleUserInput = () => {
     // Add user input to chat history
-    const updatedChatHistory: ChatMessage[] = [...chatHistory, { role: 'user', content: userInput }];
+    const updatedChatHistory: ChatMessage[] = [
+      ...chatHistory,
+      { role: "user", content: userInput },
+    ];
 
     // Start loading state
     setIsLoading(true);
 
     // Process user input and generate a response
     setTimeout(() => {
-      let response = '';
+      let response = "";
 
       if (!started) {
         response = "Hey, what would you like to buy today?";
@@ -40,10 +43,13 @@ const Home = () => {
       }
 
       // Add user input and chatbot response to chat history
-      setChatHistory([...updatedChatHistory, { role: 'chatbot', content: response }]);
+      setChatHistory([
+        ...updatedChatHistory,
+        { role: "chatbot", content: response },
+      ]);
 
       // Clear user input
-      setUserInput('');
+      setUserInput("");
 
       // End loading state
       setIsLoading(false);
@@ -53,12 +59,12 @@ const Home = () => {
   const generateChatbotResponse = (userInput: string) => {
     // Simulate chatbot response based on user input
     switch (userInput.toLowerCase()) {
-      case 'shoes':
-        return 'Sure, let me show you our latest shoe collection. What type of shoes are you looking for?';
-      case 'clothes':
-        return 'Great! We have a wide range of clothing options. Can you specify the type or any specific preferences?';
-      case 'accessories':
-        return 'Awesome! We have a variety of accessories available. What kind of accessories are you interested in?';
+      case "shoes":
+        return "Sure, let me show you our latest shoe collection. What type of shoes are you looking for?";
+      case "clothes":
+        return "Great! We have a wide range of clothing options. Can you specify the type or any specific preferences?";
+      case "accessories":
+        return "Awesome! We have a variety of accessories available. What kind of accessories are you interested in?";
       default:
         return "I'm sorry, I didn't understand that. Please choose from shoes, clothes, or accessories.";
     }
@@ -67,7 +73,9 @@ const Home = () => {
   // Function to handle the initial message when "Get Started" is clicked
   const handleGetStarted = () => {
     if (!started) {
-      setChatHistory([{ role: 'chatbot', content: "Hey, what would you like to buy today?" }]);
+      setChatHistory([
+        { role: "chatbot", content: "Hey, what would you like to buy today?" },
+      ]);
       setStarted(true);
     }
   };
@@ -83,17 +91,27 @@ const Home = () => {
       <main className="flex flex-col items-center justify-center min-h-screen">
         {/* Heading and Subheading */}
         <h1 className="text-4xl font-cursive mb-2 text-gray-800">Lemonade</h1>
-        <h4 className="text-lg text-gray-600 mb-4">Personal Choice Assistant</h4>
+        <h4 className="text-lg text-gray-600 mb-4">
+          Personal Choice Assistant
+        </h4>
 
         <div className="max-w-md border p-4 rounded-md mb-4">
           {/* Display Chat History */}
           {chatHistory.map((message, index) => (
-            <div key={index} className={`p-3 mb-2 ${message.role === 'user' ? 'text-right' : 'text-left'}`}>
+            <div
+              key={index}
+              className={`p-3 mb-2 ${
+                message.role === "user" ? "text-right" : "text-left"
+              }`}
+            >
               {/* Chatbot's Chat */}
-              {message.role === 'chatbot' && (
+              {message.role === "chatbot" && (
                 <div className="bg-gray-800 p-2 rounded-md inline-block">
-                  {message.content.split('').map((letter, letterIndex) => (
-                    <span key={letterIndex} className={`typing-animation-${letterIndex}`}>
+                  {message.content.split("").map((letter, letterIndex) => (
+                    <span
+                      key={letterIndex}
+                      className={`typing-animation-${letterIndex}`}
+                    >
                       {letter}
                     </span>
                   ))}
@@ -101,7 +119,7 @@ const Home = () => {
               )}
 
               {/* User's Chat */}
-              {message.role === 'user' && (
+              {message.role === "user" && (
                 <div className="bg-gray-800 p-2 rounded-md inline-block">
                   {message.content}
                 </div>
@@ -120,18 +138,23 @@ const Home = () => {
             className="flex-grow px-2 py-1 border rounded-md focus:outline-none focus:border-blue-500 text-black"
           />
           <button
-            onClick={() => { handleUserInput(); handleGetStarted(); }}
+            onClick={() => {
+              handleUserInput();
+              handleGetStarted();
+            }}
             disabled={!userInput || isLoading}
-            className={`bg-pink-500 text-white px-4 py-2 rounded-md ${isLoading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-pink-600 transition duration-300'}`}
+            className={`bg-pink-500 text-white px-4 py-2 rounded-md ${
+              isLoading
+                ? "opacity-50 cursor-not-allowed"
+                : "hover:bg-pink-600 transition duration-300"
+            }`}
           >
-            {isLoading ? 'Loading...' : 'Send'}
+            {isLoading ? "Loading..." : "Send"}
           </button>
         </div>
-
-        
       </main>
 
-  <Navbar/>
+      <Navbar />
     </div>
   );
 };
