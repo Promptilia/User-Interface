@@ -12,12 +12,12 @@ const Home = () => (
 
     {/* Chatbot Picture */}
     <div className="mb-8">
-      {/* Add your chatbot picture here */}
+    <iframe src="https://lottie.host/embed/4ccfa6ac-a8e1-475f-bb25-f2975390a2fb/a0zvmQ0WCC.json"></iframe>
       <img src="/path/to/chatbot-image.png" alt="Chatbot" className="w-32 h-32 rounded-full" />
     </div>
 
     {/* Get Started Button */}
-    <Link href="/chatwidget" passHref>
+    <Link href="/mainpage" passHref>
       <div className="bg-pink-500 text-white px-6 py-3 rounded-full font-semibold hover:bg-pink-600 transition duration-300">
         Get Started
       </div>

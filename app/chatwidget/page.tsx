@@ -3,6 +3,7 @@
 // pages/index.js
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
+import Navbar from '../components/Navbar';
 
 interface ChatMessage {
   role: 'user' | 'chatbot';
@@ -126,11 +127,11 @@ const Home = () => {
             {isLoading ? 'Loading...' : 'Send'}
           </button>
         </div>
+
+        
       </main>
 
-      <footer className="mt-8 text-center">
-        <p className="text-gray-500">Powered by Next.js</p>
-      </footer>
+  <Navbar/>
     </div>
   );
 };
