@@ -1,22 +1,22 @@
 // pages/index.js
-import Head from 'next/head';
-import ProductCard from '../components/ProductCard';
-import Navbar from '../components/Navbar';
+import Head from "next/head";
+import ProductCard from "../ui/components/ProductCard";
+import Navbar from "../ui/components/Navbar";
 
 const products = [
   {
-    id: '1',
-    name: 'Refreshing Lemonade',
-    category: 'Beverage',
+    id: "1",
+    name: "Refreshing Lemonade",
+    category: "Beverage",
     price: 3.99,
-    imageUrl: '/images/lemonade.jpg',
+    imageUrl: "/images/lemonade.jpg",
   },
   {
-    id: '2',
-    name: 'Lemonade Stand T-Shirt',
-    category: 'Clothing',
+    id: "2",
+    name: "Lemonade Stand T-Shirt",
+    category: "Clothing",
     price: 15.99,
-    imageUrl: '/images/tshirt.jpg',
+    imageUrl: "/images/tshirt.jpg",
   },
   // Add more lemonade-related products as needed
 ];
@@ -43,8 +43,7 @@ const Home = () => {
       </main>
 
       {/* Bottom Navigation Bar */}
-       <Navbar/>
-      
+      <Navbar />
     </div>
   );
 };

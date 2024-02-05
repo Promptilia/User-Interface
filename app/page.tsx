@@ -1,30 +1,32 @@
-// app/page.tsx
-import Link from 'next/link';
+import React from "react";
+import Navbar from "./ui/Navbar";
+import Model from "./ui/components/Model";
 
+type Props = {};
 
-const Home = () => (
-  <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-    {/* Heading and Subtitle */}
-    <div className="text-center mb-8">
-      <h1 className="text-3xl text-pink-500 font-bold">All at One Place</h1>
-      <h4 className="text-gray-500 text-lg">Finding your needs just in 10 seconds</h4>
-    </div>
-
-    {/* Chatbot Picture */}
-    <div className="mb-8">
-    <iframe src="https://lottie.host/embed/4ccfa6ac-a8e1-475f-bb25-f2975390a2fb/a0zvmQ0WCC.json"></iframe>
-      <img src="/path/to/chatbot-image.png" alt="Chatbot" className="w-32 h-32 rounded-full" />
-    </div>
-
-    {/* Get Started Button */}
-    <Link href="/mainpage" passHref>
-      <div className="bg-pink-500 text-white px-6 py-3 rounded-full font-semibold hover:bg-pink-600 transition duration-300">
-        Get Started
-      </div>
-    </Link>
-
-   
-  </div>
-);
+const Home = (props: Props) => {
+  return (
+    <>
+      <Navbar />
+      <section className="w-full h-full flex flex-col items-center">
+        <h1 className="text-white font-black text-9xl p-10 my-5 flex flex-col items-center justify-between leading-tight tracking-tight uppercase">
+          Promptilia
+          <span className="text-zinc-500 text-5xl font-normal m-2 capitalize leading-3 -tracking-normal">
+            An AI-Powered Shopping Store.
+          </span>
+        </h1>
+        <button
+          type="button"
+          className="flex flex-col items-center justify-center px-5 py-4 rounded-full bg-blue-600 mt-5"
+        >
+          <span className="font-semibold text-white text-6xl my-4 mx-2">
+            Get Started
+          </span>
+        </button>
+        <Model />
+      </section>
+    </>
+  );
+};
 
 export default Home;
