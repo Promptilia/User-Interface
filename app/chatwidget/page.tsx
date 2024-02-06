@@ -1,162 +1,47 @@
-"use client";
+import React from "react";
+import FemaleModel from "../ui/FemaleModel";
 
-import { useState, useEffect } from "react";
-import Head from "next/head";
-import Navbar from "../ui/Navbar";
+type Props = {};
 
-interface ChatMessage {
-  role: "user" | "chatbot";
-  content: string;
-}
-
-const Home = () => {
-  const [userInput, setUserInput] = useState<string>("");
-  const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [started, setStarted] = useState(false);
-
-  useEffect(() => {
-    // Display initial message from chatbot when component mounts
-    handleGetStarted();
-  }, []); // Empty dependency array ensures this runs only once
-
-  const handleUserInput = () => {
-    // Add user input to chat history
-    const updatedChatHistory: ChatMessage[] = [
-      ...chatHistory,
-      { role: "user", content: userInput },
-    ];
-
-    // Start loading state
-    setIsLoading(true);
-
-    // Process user input and generate a response
-    setTimeout(() => {
-      let response = "";
-
-      if (!started) {
-        response = "Hey, what would you like to buy today?";
-        setStarted(true);
-      } else {
-        response = generateChatbotResponse(userInput);
-      }
-
-      // Add user input and chatbot response to chat history
-      setChatHistory([
-        ...updatedChatHistory,
-        { role: "chatbot", content: response },
-      ]);
-
-      // Clear user input
-      setUserInput("");
-
-      // End loading state
-      setIsLoading(false);
-    }, 1000); // Simulating a delay for loading purposes
-  };
-
-  const generateChatbotResponse = (userInput: string) => {
-    // Simulate chatbot response based on user input
-    switch (userInput.toLowerCase()) {
-      case "shoes":
-        return "Sure, let me show you our latest shoe collection. What type of shoes are you looking for?";
-      case "clothes":
-        return "Great! We have a wide range of clothing options. Can you specify the type or any specific preferences?";
-      case "accessories":
-        return "Awesome! We have a variety of accessories available. What kind of accessories are you interested in?";
-      default:
-        return "I'm sorry, I didn't understand that. Please choose from shoes, clothes, or accessories.";
-    }
-  };
-
-  // Function to handle the initial message when "Get Started" is clicked
-  const handleGetStarted = () => {
-    if (!started) {
-      setChatHistory([
-        { role: "chatbot", content: "Hey, what would you like to buy today?" },
-      ]);
-      setStarted(true);
-    }
-  };
-
+const Chat = (props: Props) => {
   return (
     <>
-      <div className="container mx-auto p-4 bg-white">
-        <Navbar />
-        <Head>
-          <title>Lemonade</title>
-          <meta name="description" content="Personal Choice Assistant" />
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
-
-        <main className="flex flex-col items-center justify-center min-h-screen">
-          {/* Heading and Subheading */}
-          <h1 className="text-4xl font-cursive mb-2 text-gray-800">Lemonade</h1>
-          <h4 className="text-lg text-gray-600 mb-4">
-            Personal Choice Assistant
-          </h4>
-
-          <div className="max-w-md border p-4 rounded-md mb-4">
-            {/* Display Chat History */}
-            {chatHistory.map((message, index) => (
-              <div
-                key={index}
-                className={`p-3 mb-2 ${
-                  message.role === "user" ? "text-right" : "text-left"
-                }`}
-              >
-                {/* Chatbot's Chat */}
-                {message.role === "chatbot" && (
-                  <div className="bg-gray-800 p-2 rounded-md inline-block">
-                    {message.content.split("").map((letter, letterIndex) => (
-                      <span
-                        key={letterIndex}
-                        className={`typing-animation-${letterIndex}`}
-                      >
-                        {letter}
-                      </span>
-                    ))}
-                  </div>
-                )}
-
-                {/* User's Chat */}
-                {message.role === "user" && (
-                  <div className="bg-gray-800 p-2 rounded-md inline-block">
-                    {message.content}
-                  </div>
-                )}
-              </div>
-            ))}
+      <section className="w-full h-full flex flex-row items-start justify-center">
+        <div className="flex flex-col items-center justify-between w-[30%] h-full">
+          <h1 className="text-white text-2xl w-full bg-black p-2 font-bold flex items-center justify-center leading-snug tracking-normal">
+            🤖 How can I help you Today
+            <span className="mx-2 text-6xl text-blue-700 font-black leading-tight tracking-tight">
+              ?
+            </span>
+          </h1>
+          <div className="h-full w-full bg-blue-100">
+            <FemaleModel />
           </div>
-
-          {/* User Input Field */}
-          <div className="flex items-center space-x-2">
-            <input
-              type="text"
-              value={userInput}
-              onChange={(e) => setUserInput(e.target.value)}
-              placeholder="Type your message..."
-              className="flex-grow px-2 py-1 border rounded-md focus:outline-none focus:border-blue-500 text-black"
-            />
-            <button
-              onClick={() => {
-                handleUserInput();
-                handleGetStarted();
-              }}
-              disabled={!userInput || isLoading}
-              className={`bg-pink-500 text-white px-4 py-2 rounded-md ${
-                isLoading
-                  ? "opacity-50 cursor-not-allowed"
-                  : "hover:bg-pink-600 transition duration-300"
-              }`}
-            >
-              {isLoading ? "Loading..." : "Send"}
-            </button>
+        </div>
+        <div className="w-[70%] h-full max-h-screen bg-black p-2 text-white flex flex-col items-start justify-start overflow-auto pb-36">
+          <div className="w-fit font-medium px-3 py-2 rounded-full border-2 border-solid border-white bg-blue-600 text-black m-1">
+            Hello, User
           </div>
-        </main>
-      </div>
+          <div className="self-end w-fit font-medium px-3 py-2 rounded-full border-2 border-solid border-white bg-blue-600 text-black m-1 my-2">
+            Hi
+          </div>
+          <div className="w-fit font-medium px-3 py-2 rounded-full border-2 border-solid border-white bg-blue-600 text-black m-1 my-2">
+            I am here to make you buy goods which are value for money
+          </div>
+        </div>
+        <div className="fixed bottom-0 left-0 right-0 p-3 w-full bg-black">
+          <input
+            type="text"
+            name="userinput"
+            id="userinput"
+            placeholder="Ask me anything..."
+            required
+            className="w-full rounded-full border-2 border-solid border-blue-900 p-4 outline-none"
+          />
+        </div>
+      </section>
     </>
   );
 };
 
-export default Home;
+export default Chat;
