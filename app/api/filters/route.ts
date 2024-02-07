@@ -1,19 +1,19 @@
-import { generateAiResponse } from "@/app/lib/utils/generateAiResponse";
 import { NextRequest, NextResponse } from "next/server";
+const { getJson } = require("serpapi");
 
 export const GET = async (req: NextRequest) => {
     try {
-        const product = req.nextUrl.searchParams.get('product');
-        const prompt =
-            `I have a product ${product} which a user wants to buy online, generate all possible filters that a user can put on the product to get his desiered product
-            Give response in form of an array of objects so that i can populate the filters on my frontend
-            `;
-        const filter = await generateAiResponse(prompt);
+        const product = req.nextUrl.searchParams.get("product");
+        const json = await getJson({
+            engine: "google_shopping",
+            q: product,
+            api_key: process.env.SERP_API_KEY
+        });
         return NextResponse.json({
             success: true,
-            message: 'data fetched',
-            data: filter
-        });
+            message: 'filters fetch successfully',
+            data: json["filters"]
+        })
     } catch (error: any) {
         return NextResponse.json({
             success: false,
