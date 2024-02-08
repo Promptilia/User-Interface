@@ -9,15 +9,17 @@ import React, {
   useState,
   Dispatch,
   SetStateAction,
+  RefObject,
 } from "react";
 import { fakeFiltersData } from "../../fakedata";
 import { Message } from "../Interfaces";
 
 type Props = {
   setMessages: Dispatch<SetStateAction<Message[]>>;
+  TypingRef: RefObject<HTMLDivElement>;
 };
 
-const UserInput = ({ setMessages }: Props) => {
+const UserInput = ({ setMessages, TypingRef }: Props) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const [formData, setFormData] = useState({
@@ -37,13 +39,26 @@ const UserInput = ({ setMessages }: Props) => {
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     const key = e.key;
 
+    if (formData.userInput.length > 0) {
+      if (TypingRef.current?.classList.contains("hidden")) {
+        TypingRef.current.classList.remove("hidden");
+        TypingRef.current.classList.add("block");
+      }
+    }
+
     if (key === "Enter") {
       handleSubmit();
+      handleInputBlur();
     }
   };
 
-  const handleInputFocus = (e: FocusEvent<HTMLInputElement>) => {
-    console.log("focused");
+  const handleInputBlur = () => {
+    if (TypingRef.current) {
+      if (!TypingRef.current.classList.contains("hidden")) {
+        TypingRef.current.classList.remove("block");
+        TypingRef.current.classList.add("hidden");
+      }
+    }
   };
 
   const handleSubmit = async () => {
@@ -90,7 +105,7 @@ const UserInput = ({ setMessages }: Props) => {
         value={formData.userInput}
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}
-        onFocus={handleInputFocus}
+        onBlur={handleInputBlur}
         autoComplete="off"
         className="w-full rounded-full border-2 border-solid border-blue-900 p-4 outline-none disabled:cursor-not-allowed"
       />
