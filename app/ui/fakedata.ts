@@ -327,3 +327,30 @@ export const fakeFiltersData = [
     ],
   },
 ];
+
+export const fakeProductsData = [
+  {
+    id: "1",
+    name: "Adidas",
+    category: "Category 1",
+    price: 10.99,
+    imageUrl:
+      "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/71a00703e8c14c76aa8471445a9eaf40_9366/Ultrabounce_Shoes_Blue_HP5783_HM1.jpg",
+  },
+  {
+    id: "2",
+    name: "Nike",
+    category: "Category 2",
+    price: 19.99,
+    imageUrl:
+      "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c2hvZXN8ZW58MHx8MHx8fDA%3D",
+  },
+  {
+    id: "3",
+    name: "Product 3",
+    category: "Category 3",
+    price: 15.49,
+    imageUrl:
+      "https://media.wired.com/photos/6539511c987b1f6c38c70245/191:100/w_2580,c_limit/Gear-Vivobarefoot-Primus-Trail-FG--SOURCE-Vivobarefoot.jpg",
+  },
+];

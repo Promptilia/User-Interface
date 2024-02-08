@@ -1,10 +1,13 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Message } from "../Interfaces";
+import { fakeProductsData } from "../../fakedata";
+import ProductCard from "../Products/ProductCard";
 
 type Props = {
   messages: Message[];
+  setMessages: Dispatch<SetStateAction<Message[]>>;
 };
 
 // CSS
@@ -13,7 +16,7 @@ const botAvatarCss = `font-bold px-2 flex items-center justify-center rounded-fu
 const userMessageCss = `w-fit self-end font-medium px-3 py-2 rounded-full border-2 border-solid border-white shadow-md shadow-zinc-600 bg-white text-black m-1`;
 const userAvatarCss = `font-bold px-2 flex items-center justify-center self-end rounded-full border-2 border-solid border-yellow-600 shadow-md shadow-zinc-600 bg-yellow-600 text-black m-1 uppercase text-2xl`;
 
-const Messages = ({ messages }: Props) => {
+const Messages = ({ messages, setMessages }: Props) => {
   const [selectedFilters, setSelectedFilters] = useState<{
     [key: string]: string;
   }>({});
@@ -27,8 +30,24 @@ const Messages = ({ messages }: Props) => {
     setLoading(true);
 
     try {
+      setMessages((prev) => [
+        ...prev,
+        {
+          isBotResponse: false,
+          message: "Bring me something based on above preferences.",
+        },
+      ]);
+
+      setMessages((prev) => [
+        ...prev,
+        {
+          isBotResponse: true,
+          message: "Here are the best products which you can buy",
+          products: fakeProductsData,
+        },
+      ]);
     } catch (err) {
-      console.log(selectedFilters);
+      console.error(err);
     } finally {
       setLoading(false);
     }
@@ -58,8 +77,8 @@ const Messages = ({ messages }: Props) => {
                 <div className="w-fit font-medium px-3 py-2 my-2 mx-1 rounded-full border-2 border-solid border-blue-600 bg-blue-600 shadow-md shadow-zinc-600 text-black">
                   Tell me what exactly you want then I will provide you the best
                 </div>
-                {message.filters?.map((filter, index) => (
-                  <div className="w-full px-3 my-2 mx-1" key={index}>
+                {message.filters?.map((filter, i) => (
+                  <div className="w-full px-3 my-2 mx-1" key={i}>
                     <div className="w-full p-2 font-black rounded-lg border-2 border-solid bg-[#0f172a60] max-h-[350px] overflow-auto text-white">
                       {filter.type}
                       <hr className="w-full bg-slate-700 my-2" />
@@ -96,6 +115,22 @@ const Messages = ({ messages }: Props) => {
                 >
                   {loading ? <>Loading...</> : <>Submit</>}
                 </button>
+              </>
+            )}
+            {message.products && message.products.length > 0 && (
+              <>
+                <div className="flex flex-row items-start justify-evenly w-full flex-shrink-0 flex-wrap gap-3">
+                  {message.products.map((product, idx) => (
+                    <ProductCard
+                      key={idx}
+                      id={product.id}
+                      name={product.name}
+                      category={product.category}
+                      imageUrl={product.imageUrl}
+                      price={product.price}
+                    />
+                  ))}
+                </div>
               </>
             )}
           </>

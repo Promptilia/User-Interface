@@ -12,6 +12,7 @@ export interface Message {
   isBotResponse: boolean;
   message?: string | string[];
   filters?: Filter[];
+  products?: Product[];
 }
 
 export interface Product {

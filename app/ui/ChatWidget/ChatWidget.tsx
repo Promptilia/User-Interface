@@ -44,7 +44,7 @@ const ChatWidget = (props: Props) => {
         <div className="w-full h-full max-h-screen bg-slate-900 flex items-center justify-center">
           <h1 className="font-black text-zinc-500 text-9xl">{brandName}</h1>
         </div>
-        <Messages messages={messages} />
+        <Messages messages={messages} setMessages={setMessages} />
       </div>
       <div className="fixed bottom-0 left-0 right-0 p-3 w-full bg-slate-900">
         <UserInput setMessages={setMessages} />
