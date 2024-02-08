@@ -1,7 +1,6 @@
 import { constructTbs } from '@/app/lib/utils/constructTbs';
 import { NextRequest, NextResponse } from 'next/server'
-import serapi from 'serpapi'
-const { getJson } = require("serpapi");
+import { getJson } from 'serpapi'
 
 export const HEAD = async (req: NextRequest) => {
     try {
