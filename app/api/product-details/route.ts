@@ -1,18 +1,21 @@
+import { filterArraySchema } from '@/app/lib/schema/filterSchema';
 import { constructTbs } from '@/app/lib/utils/constructTbs';
 import { NextRequest, NextResponse } from 'next/server'
 import { getJson } from 'serpapi'
 
-export const HEAD = async (req: NextRequest) => {
+export const POST = async (req: NextRequest) => {
     try {
         const { productName, filters } = await req.json();
 
-        const tbs = constructTbs(filters);
+        const parsedFilters = filterArraySchema.parse(filters);
+
+        const tbs = constructTbs(parsedFilters);
 
         const json = await getJson({
             engine: "google_shopping",
             q: productName,
             tbs,
-            api_key: "secret_api_key"
+            api_key: process.env.SERP_API_KEY
         });
 
         return NextResponse.json({

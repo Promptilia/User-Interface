@@ -1,25 +1,32 @@
-type filter = {
-    type: string;
-    option: string;
-    tbs: string;
-}
+import { filter } from "../schema/filterSchema";
 
 export const constructTbs = (filters: Array<filter>): string => {
-    // Create an object to store unique tbs values
-    const uniqueTbs: { [key: string]: boolean } = {};
+    let tbsArray: string[] = [];
 
-    // Iterate through each filter and extract tbs values
-    filters.forEach((filter) => {
-        const tbsValues = filter.tbs.split(',');
+    filters.forEach((filter, idx) => {
+        const regex = /pdtr\d+:(\d+)/g;
+        let matches;
+        const pdtrValues = [];
+        while ((matches = regex.exec(filter.option.tbs)) !== null)
+            pdtrValues.push(matches[1])
 
-        // Iterate through each tbs value and add it to the uniqueTbs object
-        tbsValues.forEach((tbsValue) => {
-            uniqueTbs[tbsValue] = true;
+        let filterString = `pdtr${idx}:`
+
+        pdtrValues.forEach((val,i) => {
+            if (i == pdtrValues.length -1) {
+                filterString += `${val}`
+            } else {
+                filterString += `${val}!`
+            }
         });
+
+        let tbsString = filterString;
+        if (idx != filters.length -1) {
+            tbsString += ','
+        }
+
+        tbsArray.push(tbsString);
     });
 
-    // Combine unique tbs values into a single variable
-    const combinedTbs = Object.keys(uniqueTbs).join(',');
-
-    return combinedTbs;
+    return `mr:1,${tbsArray.join('')}`;
 };
