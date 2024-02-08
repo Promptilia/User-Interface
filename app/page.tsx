@@ -1,6 +1,6 @@
 import React from "react";
-import Navbar from "./ui/Navbar";
-import Model from "./ui/Model";
+import Navbar from "./ui/Navbar/Navbar";
+import Model from "./ui/Home/Model";
 import Link from "next/link";
 
 type Props = {};

@@ -1,7 +1,7 @@
 // pages/index.js
 import Head from "next/head";
-import ProductCard from "../../ui/ProductCard";
-import Navbar from "../../ui/Navbar";
+import ProductCard from "../../ui/ChatWidget/Products/ProductCard";
+import Navbar from "../../ui/Navbar/Navbar";
 
 const products = [
   {
