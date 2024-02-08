@@ -14,6 +14,12 @@ Powered by: `Next.js`, `Typescript`, `Gemini`, `Tailwind CSS`
 
 [![AGPL License](https://img.shields.io/badge/license-AGPL-blue.svg)](http://www.gnu.org/licenses/agpl-3.0)
 
+## Features
+
+- Get the real-time results
+- Cool looking user interface
+- Feel's like as if you are in a Shopping store which has all the things and you are talking to the salesman
+
 ## Usage
 
 - First, Clone this repository
@@ -39,15 +45,21 @@ Powered by: `Next.js`, `Typescript`, `Gemini`, `Tailwind CSS`
   ```bash
   npm run dev
   ```
+
   or
+
   ```bash
   yarn dev
   ```
+
   or
+
   ```bash
   pnpm dev
   ```
+
   or
+
   ```bash
   bun dev
   ```
