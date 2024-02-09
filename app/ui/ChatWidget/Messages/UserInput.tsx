@@ -2,7 +2,6 @@
 
 import React, {
   ChangeEvent,
-  FocusEvent,
   KeyboardEvent,
   useEffect,
   useRef,
@@ -11,8 +10,8 @@ import React, {
   SetStateAction,
   RefObject,
 } from "react";
-import { fakeFiltersData } from "../../fakedata";
 import { Message } from "../Interfaces";
+import { Converse } from "../Conversation/Conversation";
 
 type Props = {
   setMessages: Dispatch<SetStateAction<Message[]>>;
@@ -64,31 +63,24 @@ const UserInput = ({ setMessages, TypingRef }: Props) => {
   const handleSubmit = async () => {
     if (!formData.userInput) return;
 
+    // start the loading effect
     setLoading(true);
 
-    try {
-      // Simulating adding messages
-      setMessages((prev) => [
-        ...prev,
-        { isBotResponse: false, message: formData.userInput },
-      ]);
+    // show the user message
+    setMessages((prev) => [
+      ...prev,
+      { isBotResponse: false, message: formData.userInput },
+    ]);
 
-      await new Promise((resolve) => {
-        setTimeout(() => {
-          setMessages((prev) => [
-            ...prev,
-            { isBotResponse: true, filters: fakeFiltersData },
-          ]);
-          resolve("Loaded");
-        }),
-          1550;
-      });
-    } catch (e) {
-      console.error(e);
-    } finally {
-      setLoading(false);
-      setFormData((prev) => ({ ...prev, userInput: "" }));
-    }
+    // set the bot response
+    await Converse(
+      setMessages,
+      formData.userInput,
+      "Oops! There is something wrong, I'll come back."
+    );
+
+    setLoading(false);
+    setFormData((prev) => ({ ...prev, userInput: "" }));
   };
 
   return (

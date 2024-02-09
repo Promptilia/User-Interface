@@ -1,28 +1,52 @@
 "use client";
 
-import React, { Suspense, useRef } from "react";
+import React, {
+  Dispatch,
+  SetStateAction,
+  Suspense,
+  useEffect,
+  useRef,
+} from "react";
 import * as THREE from "three";
 import { Canvas } from "@react-three/fiber";
 import { Environment, OrbitControls, useFBX } from "@react-three/drei";
+import { Converse, StartPrompt } from "../Conversation/Conversation";
+import { Message } from "../Interfaces";
 
-type Props = {};
+type Props = {
+  setMessages: Dispatch<SetStateAction<Message[]>>;
+};
 
-const Model = () => {
+const Model = ({ setMessages }: Props) => {
   const femaleModel = useFBX("/model/female-model.fbx");
 
-  femaleModel.castShadow = true;
-  femaleModel.rotation.x = -190;
-  femaleModel.rotation.y = 0;
-  femaleModel.rotation.z = 0;
-  femaleModel.position.set(0, -2, -8);
-  femaleModel.lookAt(2, 60, 10);
+  useEffect(() => {
+    const loadModel = async () => {
+      if (femaleModel) {
+        femaleModel.castShadow = true;
+        femaleModel.rotation.x = -190;
+        femaleModel.rotation.y = 0;
+        femaleModel.rotation.z = 0;
+        femaleModel.position.set(0, -2, -8);
+        femaleModel.lookAt(2, 60, 10);
 
-  // console.log(femaleModel.animations);
+        console.log(femaleModel.animations);
+
+        await Converse(
+          setMessages,
+          StartPrompt,
+          "🙇 Sorry Shop is closed, come after some time."
+        );
+      }
+    };
+
+    loadModel();
+  }, [femaleModel]);
 
   return <primitive object={femaleModel} scale={0.05} />;
 };
 
-const FemaleModel = (props: Props) => {
+const FemaleModel = ({ setMessages }: Props) => {
   return (
     <>
       <Canvas shadows>
@@ -34,7 +58,7 @@ const FemaleModel = (props: Props) => {
         />
         <OrbitControls rotateSpeed={1} />
         <Suspense fallback={null}>
-          <Model />
+          <Model setMessages={setMessages} />
           <Environment preset="city" background />
         </Suspense>
         <mesh

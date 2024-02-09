@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import FemaleModel from "./Model/FemaleModel";
 import UserInput from "./Messages/UserInput";
 import Messages from "./Messages/Messages";
-import { Filter, Message } from "./Interfaces";
+import { Message } from "./Interfaces";
 import { showTypingEffect } from "../utils/TypingAnim";
 
 type Props = {};
@@ -19,14 +19,6 @@ const ChatWidget = (props: Props) => {
 
   useEffect(() => {
     showTypingEffect(BRAND_NAME, setBrandName, 150);
-
-    setMessages((prev) => [
-      {
-        ...prev,
-        isBotResponse: true,
-        message: "Hello User, I am Karky welcome to promptilia",
-      },
-    ]);
   }, []);
 
   return (
@@ -45,7 +37,7 @@ const ChatWidget = (props: Props) => {
           </span>
         </h1>
         <div className="h-full w-full bg-blue-100">
-          <FemaleModel />
+          <FemaleModel setMessages={setMessages} />
         </div>
       </div>
       <div className="w-[70%] h-full relative bg-slate-900 text-white">
