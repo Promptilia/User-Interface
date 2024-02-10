@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import FemaleModel from "./Model/FemaleModel";
 import UserInput from "./Messages/UserInput";
 import Messages from "./Messages/Messages";
-import { Filter, Message } from "./Interfaces";
+import { Message } from "./Interfaces";
 import { showTypingEffect } from "../utils/TypingAnim";
 
 type Props = {};
@@ -16,17 +16,10 @@ const ChatWidget = (props: Props) => {
 
   const [brandName, setBrandName] = useState<string>("");
   const [messages, setMessages] = useState<Message[]>([]);
+  const [productName, setProductName] = useState<string>("");
 
   useEffect(() => {
     showTypingEffect(BRAND_NAME, setBrandName, 150);
-
-    setMessages((prev) => [
-      {
-        ...prev,
-        isBotResponse: true,
-        message: "Hello User, I am Karky welcome to promptilia",
-      },
-    ]);
   }, []);
 
   return (
@@ -45,17 +38,28 @@ const ChatWidget = (props: Props) => {
           </span>
         </h1>
         <div className="h-full w-full bg-blue-100">
-          <FemaleModel />
+          <FemaleModel
+            setMessages={setMessages}
+            setProductName={setProductName}
+          />
         </div>
       </div>
       <div className="w-[70%] h-full relative bg-slate-900 text-white">
         <div className="w-full h-full max-h-screen bg-slate-900 flex items-center justify-center">
           <h1 className="font-black text-zinc-500 text-9xl">{brandName}</h1>
         </div>
-        <Messages messages={messages} setMessages={setMessages} />
+        <Messages
+          messages={messages}
+          setMessages={setMessages}
+          productName={productName}
+        />
       </div>
       <div className="fixed bottom-0 left-0 right-0 p-3 w-full bg-slate-900">
-        <UserInput setMessages={setMessages} TypingRef={TypingRef} />
+        <UserInput
+          setMessages={setMessages}
+          TypingRef={TypingRef}
+          setProductName={setProductName}
+        />
       </div>
     </>
   );
