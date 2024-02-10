@@ -19,6 +19,8 @@ Powered by: `Next.js`, `Typescript`, `Gemini`, `Tailwind CSS`
 - Get the real-time results
 - Cool looking user interface
 - Feel's like as if you are in a Shopping store which has all the things and you are talking to the salesman
+- Get recommended by the Bot, based on reviews by other users for that product.
+- See the products in 3D (Yet to Implement).
 
 ## Usage
 
