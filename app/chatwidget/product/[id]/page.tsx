@@ -10,9 +10,11 @@ const Product = ({ params }: Props) => {
     <>
       <section className="w-full h-full bg-zinc-950 text-white overflow-auto">
         <div className="w-full bg-zinc-800">
-          <h1 className="w-full p-5 bg-gradient-to-b from-pink-600 via-white to-blue-600 text-transparent bg-clip-text font-black text-5xl capitalize">
-            Promptilia
-          </h1>
+          <Link href={"/"}>
+            <h1 className="w-full p-5 bg-gradient-to-b from-pink-600 via-white to-blue-600 text-transparent bg-clip-text font-black text-5xl capitalize">
+              Promptilia
+            </h1>
+          </Link>
         </div>
         <div className="w-full flex items-center flex-col mt-5">
           <div className="flex flex-row items-start gap-3">

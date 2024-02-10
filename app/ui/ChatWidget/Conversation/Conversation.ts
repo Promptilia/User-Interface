@@ -30,9 +30,7 @@ export const Converse = async (
           ...prev,
           {
             isBotResponse: true,
-            message: String(response.botMessage).slice(
-              response.botMessage.indexOf(": ") + 1
-            ),
+            message: JSON.parse(response.botMessage).karky,
           },
         ]);
       } else {
