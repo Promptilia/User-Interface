@@ -16,7 +16,7 @@ export const GET = async (req: NextRequest) => {
     return NextResponse.json({
       success: true,
       message: "filters fetch successfully",
-      data: json["filters"],
+      filters: json["filters"],
     });
   } catch (error: any) {
     return NextResponse.json({
