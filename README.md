@@ -1,6 +1,6 @@
 # Shopbot
 
-![Logo](LOGO)
+![promptillia-high-resolution-logo](https://github.com/Promptilia/User-Interface/assets/77043443/b45c6924-3bf4-4982-9535-0fa4ad6e963d)
 
 This is a shopbot created for the ease of the user's so that they can find what the want and their time don't get wasted.
 
