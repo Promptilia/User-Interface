@@ -22,9 +22,20 @@ const Messages = ({ messages, setMessages, productName }: Props) => {
     [key: string]: string;
   }>({});
   const [loading, setLoading] = useState<boolean>(false);
+  const [endIndex, setEndIndex] = useState<number>(1);
+  const [totalFilters, setTotalFilters] = useState<number>(0);
 
   const AddFilters = (key: string, value: string) => {
     setSelectedFilters((prev) => ({ ...prev, [key]: value }));
+  };
+
+  const showNextFilters = () => {
+    for (let i = 0; i < messages.length; i++) {
+      const filters = messages[i].filters;
+      if (filters && filters?.length && endIndex < filters.length) {
+        setEndIndex((prev) => ++prev);
+      }
+    }
   };
 
   const handleFilterSubmit = async () => {
@@ -77,6 +88,15 @@ const Messages = ({ messages, setMessages, productName }: Props) => {
     }
   };
 
+  useEffect(() => {
+    for (let i = 0; i < messages.length; i++) {
+      const filters = messages[i].filters;
+      if (filters?.length) {
+        setTotalFilters((prev) => filters?.length);
+      }
+    }
+  }, [messages]);
+
   return (
     <>
       <div className="absolute top-0 left-0 right-0 bottom-0 w-full h-full bg-transparent z-[1] flex flex-col items-start justify-start pb-3 max-h-[90vh] overflow-auto pt-3 px-3">
@@ -99,10 +119,10 @@ const Messages = ({ messages, setMessages, productName }: Props) => {
             )}
             {message.filters && message.filters?.length > 0 && (
               <>
-                <div className="w-fit font-medium px-3 py-2 my-2 mx-1 rounded-full border-2 border-solid border-blue-600 bg-blue-600 shadow-md shadow-zinc-600 text-black">
-                  Tell me what exactly you want then I will provide you the best
+                <div className="w-fit font-medium px-3 py-2 my-2 mx-1 rounded-full border-2 border-solid border-green-600 bg-green-600 shadow-md shadow-zinc-600 text-black">
+                  Answer the question to get the best
                 </div>
-                {message.filters?.map((filter, i) => (
+                {message.filters?.slice(0, endIndex).map((filter, i) => (
                   <div className="w-full px-3 my-2 mx-1" key={i}>
                     <div className="w-full p-2 font-black rounded-lg border-2 border-solid bg-[#0f172a60] max-h-[350px] overflow-auto text-white">
                       {filter.type}
@@ -132,14 +152,24 @@ const Messages = ({ messages, setMessages, productName }: Props) => {
                     </div>
                   </div>
                 ))}
-                <button
-                  type="button"
-                  disabled={loading}
-                  className="px-3 py-2 disabled:cursor-not-allowed m-2 rounded-lg bg-green-700 text-white"
-                  onClick={handleFilterSubmit}
-                >
-                  {loading ? <>Loading...</> : <>Submit</>}
-                </button>
+                {endIndex == totalFilters ? (
+                  <button
+                    type="button"
+                    disabled={loading}
+                    className="px-3 py-2 disabled:cursor-not-allowed m-2 rounded-lg bg-green-700 text-white"
+                    onClick={handleFilterSubmit}
+                  >
+                    {loading ? <>Loading...</> : <>Submit</>}
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    className="px-3 py-2 disabled:cursor-not-allowed m-2 rounded-lg bg-yellow-500 text-white"
+                    onClick={showNextFilters}
+                  >
+                    Next
+                  </button>
+                )}
               </>
             )}
             {message.products && message.products.length > 0 && (
