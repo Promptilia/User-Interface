@@ -6,6 +6,7 @@ export const StartPrompt =
 
 export const Converse = async (
   setMessages: Dispatch<SetStateAction<Message[]>>,
+  setProductName: Dispatch<SetStateAction<string>>,
   text: string,
   errText: string
 ) => {
@@ -44,6 +45,7 @@ export const Converse = async (
             filters: response.filters.allFilters,
           },
         ]);
+        setProductName(response.filters.productName);
       }
     } else {
       setMessages((prev) => [

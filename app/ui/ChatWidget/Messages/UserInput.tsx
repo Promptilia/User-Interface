@@ -16,9 +16,10 @@ import { Converse } from "../Conversation/Conversation";
 type Props = {
   setMessages: Dispatch<SetStateAction<Message[]>>;
   TypingRef: RefObject<HTMLDivElement>;
+  setProductName: Dispatch<SetStateAction<string>>;
 };
 
-const UserInput = ({ setMessages, TypingRef }: Props) => {
+const UserInput = ({ setMessages, TypingRef, setProductName }: Props) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const [formData, setFormData] = useState({
@@ -75,6 +76,7 @@ const UserInput = ({ setMessages, TypingRef }: Props) => {
     // set the bot response
     await Converse(
       setMessages,
+      setProductName,
       formData.userInput,
       "Oops! There is something wrong, I'll come back."
     );

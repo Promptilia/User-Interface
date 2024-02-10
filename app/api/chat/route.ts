@@ -19,6 +19,7 @@ export const POST = async (req: NextRequest) => {
     const isAskingForProduct = JSON.parse(_prompt_response.text());
 
     let filters = {
+      productName: "",
       status: false,
       allFilters: [],
     };
@@ -33,6 +34,7 @@ export const POST = async (req: NextRequest) => {
       );
       const data = await res.json();
       if (data.success) {
+        filters.productName = product;
         filters.status = true;
         filters.allFilters = data.filters;
       }

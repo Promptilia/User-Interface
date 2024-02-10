@@ -8,6 +8,7 @@ import ProductCard from "../Products/ProductCard";
 type Props = {
   messages: Message[];
   setMessages: Dispatch<SetStateAction<Message[]>>;
+  productName: string;
 };
 
 // CSS
@@ -16,7 +17,7 @@ const botAvatarCss = `font-bold px-2 flex items-center justify-center rounded-lg
 const userMessageCss = `w-fit self-end font-medium px-3 py-2 rounded-lg border-2 border-solid border-white shadow-md shadow-zinc-600 bg-white text-black m-1`;
 const userAvatarCss = `font-bold px-2 flex items-center justify-center self-end rounded-lg border-2 border-solid border-yellow-600 shadow-md shadow-zinc-600 bg-yellow-600 text-black m-1 uppercase text-2xl`;
 
-const Messages = ({ messages, setMessages }: Props) => {
+const Messages = ({ messages, setMessages, productName }: Props) => {
   const [selectedFilters, setSelectedFilters] = useState<{
     [key: string]: string;
   }>({});
@@ -26,7 +27,7 @@ const Messages = ({ messages, setMessages }: Props) => {
     setSelectedFilters((prev) => ({ ...prev, [key]: value }));
   };
 
-  const handleFilterSubmit = () => {
+  const handleFilterSubmit = async () => {
     setLoading(true);
 
     try {
@@ -38,6 +39,29 @@ const Messages = ({ messages, setMessages }: Props) => {
         },
       ]);
 
+      const res = await fetch(`/api/product-details`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          productName: productName,
+          filters: selectedFilters,
+        }),
+      });
+      const data = await res.json();
+
+      console.log(data);
+      // if (data.success) {
+      //   setMessages((prev) => [
+      //     ...prev,
+      //     {
+      //       isBotResponse: true,
+      //       message: "Here are the best products which you can buy",
+      //       products: data.products,
+      //     },
+      //   ]);
+      // }
+
+      // fake data
       setMessages((prev) => [
         ...prev,
         {

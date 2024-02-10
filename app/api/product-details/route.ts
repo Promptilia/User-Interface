@@ -6,6 +6,9 @@ import { getJson } from "serpapi";
 export const POST = async (req: NextRequest) => {
   try {
     const { productName, filters } = await req.json();
+    console.log(productName, filters);
+    if (!productName || !filters)
+      throw new Error(`Product name and filters both must be provided`);
 
     const parsedFilters = filterArraySchema.parse(filters);
 
@@ -21,7 +24,7 @@ export const POST = async (req: NextRequest) => {
     return NextResponse.json({
       success: true,
       message: "data fetch success",
-      data: json,
+      products: json,
     });
   } catch (error: any) {
     return NextResponse.json({

@@ -15,9 +15,10 @@ import { Message } from "../Interfaces";
 
 type Props = {
   setMessages: Dispatch<SetStateAction<Message[]>>;
+  setProductName: Dispatch<SetStateAction<string>>;
 };
 
-const Model = ({ setMessages }: Props) => {
+const Model = ({ setMessages, setProductName }: Props) => {
   const femaleModel = useFBX("/model/female-model.fbx");
 
   useEffect(() => {
@@ -34,6 +35,7 @@ const Model = ({ setMessages }: Props) => {
 
         await Converse(
           setMessages,
+          setProductName,
           StartPrompt,
           "🙇 Sorry Shop is closed, come after some time."
         );
@@ -46,7 +48,7 @@ const Model = ({ setMessages }: Props) => {
   return <primitive object={femaleModel} scale={0.05} />;
 };
 
-const FemaleModel = ({ setMessages }: Props) => {
+const FemaleModel = ({ setMessages, setProductName }: Props) => {
   return (
     <>
       <Canvas shadows>
@@ -58,7 +60,7 @@ const FemaleModel = ({ setMessages }: Props) => {
         />
         <OrbitControls rotateSpeed={1} />
         <Suspense fallback={null}>
-          <Model setMessages={setMessages} />
+          <Model setMessages={setMessages} setProductName={setProductName} />
           <Environment preset="city" background />
         </Suspense>
         <mesh
