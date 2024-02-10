@@ -12,10 +12,31 @@ export const POST = async (req: NextRequest) => {
     if (!userMessage)
       throw new Error(`Invalid user message | user message is required`);
 
-    // TODO:
-    // check for if asking for particular item then use the filters route
+    // check for if asking for particular item/goods
+    let _prompt = `Is the user asking for any products/goods which are sold in malls, stores, e-commerce sites and many more\nif asking then return [true, item requested] else [false, \"\"]\n{user: \"${userMessage}"}`;
+    const _prompt_result = await Gemini_Model.generateContent(_prompt);
+    const _prompt_response = await _prompt_result.response;
+    const isAskingForProduct = JSON.parse(_prompt_response.text());
 
-    // check for if asking for products then use the product route
+    let filters = {
+      status: false,
+      allFilters: [],
+    };
+
+    if (isAskingForProduct[0]) {
+      let product = isAskingForProduct[1];
+
+      // get the filter route
+      const res = await fetch(
+        new URL(`/api/filters?product=${product}`, req.url),
+        { method: "GET", headers: { "Content-Type": "application/json" } }
+      );
+      const data = await res.json();
+      if (data.success) {
+        filters.status = true;
+        filters.allFilters = data.filters;
+      }
+    }
 
     let prevConversation = "";
     try {
@@ -47,8 +68,9 @@ export const POST = async (req: NextRequest) => {
 
     return NextResponse.json({
       success: true,
-      message: "filters fetch successfully",
+      message: "user's message responded successfully",
       botMessage: response.text(),
+      filters,
     });
   } catch (error: any) {
     return NextResponse.json({

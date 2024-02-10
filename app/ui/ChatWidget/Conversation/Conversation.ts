@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from "react";
 import { Message } from "../Interfaces";
 
 export const StartPrompt =
-  "Start the conversation by telling you name and welcoming user and asking for what do you want to buy today or any related question which salesperson usually asks. keep it simple and to the point.";
+  "Start the conversation by telling your name and welcoming the user to our site and asking for what do you want to buy today. keep it simple and short.";
 
 export const Converse = async (
   setMessages: Dispatch<SetStateAction<Message[]>>,
@@ -24,15 +24,27 @@ export const Converse = async (
 
     // show the bot response
     if (response.success) {
-      setMessages((prev) => [
-        ...prev,
-        {
-          isBotResponse: true,
-          message: response.botMessage.slice(
-            response.botMessage.indexOf(": ") + 1
-          ),
-        },
-      ]);
+      if (!response.filters.status) {
+        setMessages((prev) => [
+          ...prev,
+          {
+            isBotResponse: true,
+            message: String(response.botMessage).slice(
+              response.botMessage.indexOf(": ") + 1
+            ),
+          },
+        ]);
+      } else {
+        setMessages((prev) => [
+          ...prev,
+          {
+            isBotResponse: true,
+            message:
+              "We have large variety of products, Choose your preferences to get best out of it.",
+            filters: response.filters.allFilters,
+          },
+        ]);
+      }
     } else {
       setMessages((prev) => [
         ...prev,
