@@ -21,7 +21,7 @@ export const POST = async (req: NextRequest) => {
         return NextResponse.json({
             success: true,
             message: "data fetch success",
-            data: json
+            data: json.shopping_results
         });
     } catch (error: any) {
         return NextResponse.json({
