@@ -21,15 +21,15 @@ export const POST = async (req: NextRequest) => {
       api_key: process.env.SERP_API_KEY,
     });
 
-    return NextResponse.json({
-      success: true,
-      message: "data fetch success",
-      products: json,
-    });
-  } catch (error: any) {
-    return NextResponse.json({
-      success: false,
-      message: error.message,
-    });
-  }
-};
+        return NextResponse.json({
+            success: true,
+            message: "data fetch success",
+            data: json.shopping_results
+        });
+    } catch (error: any) {
+        return NextResponse.json({
+            success: false,
+            message: error.message
+        })
+    }
+}
